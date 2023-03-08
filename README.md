@@ -1,9 +1,9 @@
-## PROJET EPSI MSPR - PAYE TON KAWA
+# PROJET EPSI MSPR - PAYE TON KAWA
 
-# Présentation du projet
+## Présentation du projet
 
-# Équipe
+## Équipe
 
-# Instalation du projet
+## Instalation du projet
 
-# Lien utile (Treelo, Documentation)
+## Lien utile (Treelo, Documentation)
