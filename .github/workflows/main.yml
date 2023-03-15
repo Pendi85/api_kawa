@@ -37,8 +37,8 @@ jobs:
          CI: true
           
           
-  deploy-main:
-    name: 'Deploy to main'
+  deploy-master:
+    name: 'Deploy to master'
     runs-on: ubuntu-latest
     needs: [test]
     if: |
@@ -56,7 +56,7 @@ jobs:
         with:
           fetch-depth: 0
           ref: dev
-      - name: Deploy to main
+      - name: Deploy to master
         run: |
           echo "# Config"
           git config --local user.email "[hidden]"
@@ -66,8 +66,8 @@ jobs:
           echo "# Checkout/pull development"
           git checkout dev
           git pull
-          echo "# Checkout/pull main"
-          git checkout main
+          echo "# Checkout/pull master"
+          git checkout master
           git pull
           echo "# Merge"
           git merge dev -X theirs --allow-unrelated-histories
