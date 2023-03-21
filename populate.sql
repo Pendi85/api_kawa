@@ -12,7 +12,6 @@ Cela signifie qu’elle est très facile à prendre en main et polyvalente sur s
 '',
 'https://www.rueducommerce.fr/medias/1362a1cc1541342aa6b51fa160dd290e/p_1000x1000/1313-21.jpg');
 
-
 INSERT INTO "Products" (name, stock, price, description, color, "createAt", "modelRA", image)
 VALUES ('THERA RETRO GLOSS',
 100,
@@ -24,3 +23,6 @@ VALUES ('THERA RETRO GLOSS',
 '11-09-2023',
 'coffee',
 'https://cdn.create-store.com/fr/wk/1514594/thera-retro-cafetiere-express.jpg?cf-resize=gallery');
+
+SELECT *
+FROM "Products"

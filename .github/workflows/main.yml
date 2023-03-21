@@ -1,0 +1,131 @@
+name: Tests and Deploy
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  test:
+    name: 'Testing'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node:
+          - 16
+    steps:
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '${{ matrix.node }}'
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          ref: dev
+      - name: 'Cache node_modules'
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-v${{ matrix.node }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-v${{ matrix.node }}-
+            
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run All Node.js Tests
+        run: npm test
+        env:
+         CI: true
+          
+          
+  deploy-master:
+    name: 'Deploy to master'
+    runs-on: ubuntu-latest
+    needs: [test]
+    if: |
+      always() && 
+      (needs.test.result == 'success')
+    strategy:
+      matrix:
+        node:
+          - 16
+    steps:
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '${{ matrix.node }}'
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          ref: dev
+      - name: Deploy to master
+        run: |
+          echo "# Config"
+          git config --local user.email "[hidden]"
+          git config --local user.name "CI"
+          echo "# Fetch all"
+          git fetch --all
+          echo "# Checkout/pull development"
+          git checkout dev
+          git pull
+          echo "# Checkout/pull master"
+          git checkout master
+          git pull
+          echo "# Merge"
+          git merge dev -X theirs --allow-unrelated-histories
+          echo "# Push"
+          git push origin
+  
+  
+  deploy-heroku:
+    runs-on: ubuntu-latest
+    needs: [deploy-master]
+    env:
+      NODE_ENV: "production"
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.12.12 
+        with:
+          heroku_api_key: "ebfc365e-4778-4cc1-9e05-f46429390826"
+          heroku_app_name: "api-kawa"
+          heroku_email: "marintosti12@gmail.com"
+          environment: production
+          
+  deploy-rejected:
+    name: 'Deploy to rejected build ${{ github.run_number }}'
+    runs-on: ubuntu-latest
+    needs: [test]
+    if: |
+      always() && 
+      (needs.test.result == 'failure')
+    strategy:
+      matrix:
+        node:
+          - 16
+    steps:
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '${{ matrix.node }}'
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          ref: dev
+      - name: Deploy
+        run: |
+          echo "# Config"
+          git config --local user.email "[hidden]"
+          git config --local user.name "CI"
+          git config --global pull.rebase true
+          echo "# Fetch all"
+          git fetch --all
+          echo "# Checkout/pull development"
+          git checkout dev
+          git pull
+          git checkout -b rejected/${{ github.run_number }}
+          echo "# Merge"
+          git merge dev -X theirs --allow-unrelated-histories
+          git push origin rejected/${{ github.run_number }}
+          echo "# Push"
+          git checkout dev
+          git reset --hard HEAD~1
+          git push -f origin dev
+          
+    
