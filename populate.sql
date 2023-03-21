@@ -22,5 +22,5 @@ VALUES ('THERA RETRO GLOSS',
 ' Elle se caractérise pour son design rétro disponible en différentes couleurs.',
 'Red',
 '11-09-2023',
-'',
+'coffee',
 'https://cdn.create-store.com/fr/wk/1514594/thera-retro-cafetiere-express.jpg?cf-resize=gallery');
