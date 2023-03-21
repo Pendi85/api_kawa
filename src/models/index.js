@@ -11,7 +11,7 @@ const db = {};
 
 let sequelize;
 sequelize = new Sequelize(
-    config
+  config
 );
 
 fs

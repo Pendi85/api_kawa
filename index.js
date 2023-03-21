@@ -10,6 +10,6 @@ route(app);
 
 const port = 5000;
 
-app.listen(process.env.PORT || port, () => {
+app.listen(process.env.PORT || 5000, () => {
   console.log('App is now running at port ', process.env.PORT)
 })
