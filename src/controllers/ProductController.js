@@ -70,5 +70,26 @@ export default {
             err.message || "Some error occurred while deleting product '${req.query.id}'."
         });
       });
+  },
+
+  async findById(req, res) {
+    Product.findOne({
+      where: { id: req.params.id }
+    })
+      .then(data => {
+        if (!data) {
+          res.status(404).send({
+            message: "Product not found"
+          });
+
+        } else
+          res.send(data);
+      })
+      .catch(err => {
+        res.status(500).send({
+          message:
+            err.message || "Some error occurred while retrieving one product."
+        });
+      });
   }
 }

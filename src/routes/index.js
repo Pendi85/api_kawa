@@ -6,4 +6,5 @@ export default (app) => {
     app.post('/products', ProductController.createProduct);
     app.put('/products', ProductController.updateProduct);
     app.delete('/products', ProductController.deleteProduct);
+    app.get('/products/:id', AuthMiddleware.authenticateJWT, ProductController.findById);
 };
