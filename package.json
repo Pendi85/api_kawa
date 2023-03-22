@@ -172,6 +172,7 @@
     "json-schema-traverse": "^1.0.0",
     "json-stable-stringify-without-jsonify": "^1.0.1",
     "json5": "^2.2.3",
+    "jsonwebtoken": "^9.0.0",
     "kind-of": "^6.0.3",
     "levn": "^0.4.1",
     "loader-runner": "^4.3.0",
@@ -196,6 +197,7 @@
     "neo-async": "^2.6.2",
     "node-environment-flags": "^1.0.6",
     "node-releases": "^2.0.10",
+    "nodemon": "^2.0.7",
     "normalize-path": "^3.0.0",
     "object-inspect": "^1.12.3",
     "object-keys": "^1.1.1",
@@ -304,8 +306,7 @@
     "word-wrap": "^1.2.3",
     "wrappy": "^1.0.2",
     "yallist": "^3.1.1",
-    "yocto-queue": "^0.1.0",
-    "nodemon": "^2.0.7"
+    "yocto-queue": "^0.1.0"
   },
   "scripts": {
     "test": "jest",
